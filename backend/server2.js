@@ -122,7 +122,9 @@ const someData=async()=>{
         console.log("connected successfully");
         const db=client.db('movies');
         const collection=db.collection('moviesData');
-        const result=await collection.find({Series_Title:{$regex:'&b'}}).limit(10).toArray();
+        // const result=await collection.find({Series_Title:{$regex:'^b',$options:'i'}}).limit(10).toArray();
+        const result=await collection.find({Series_Title:{$regex:'[ns]{2}$',$options:'i'}}).limit(10).toArray();
+
         console.log(result);
         client.close();
 
