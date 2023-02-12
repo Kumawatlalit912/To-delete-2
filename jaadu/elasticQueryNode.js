@@ -3,6 +3,25 @@ const {Client}=require('@elastic/elasticsearch');
 const client=new Client({node:'http://localhost:9200'});
 
 
+//another way to connec to elasticsearch
+
+// const elasticsearch = require('@elastic/elasticsearch');
+// const client=new elasticsearch.Client({
+//     host:'localhost:9200',
+//     log:'trace'
+// })
+// const body={
+//     query:{
+//         .......
+//     }
+// }
+// client.search({
+//     index:.....,
+//     type:...,
+//     body:body,
+// }).then((res)=>{})
+
+
 //get data using elasticsearch
 
 const run=async()=>{
