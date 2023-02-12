@@ -15,7 +15,7 @@ const run=async()=>{
                 }
             }
         })
-        console.log(result.hits.hits);
+        console.log(result.hits.total);
     }catch(e){
         console.log(e);
     }
@@ -52,4 +52,36 @@ const docs=[
 const body=docs.flatMap(doc=>[{index:{_index:'my_index'}},doc])
 await client.bulk({refresh:true,body});
 }
-insertBulk().catch(console.log);
+// insertBulk().catch(console.log);
+
+const totalHits=async()=>{
+    try{
+        console.time();
+        const res=await client.search({
+            index:'ecom',
+            size:5,
+            body:{
+                query:{
+                    bool:{
+                    must:[
+                        {range:{
+                            StockCode:{
+                                gte:84878,
+                                lte:84880
+                            }
+                        }}
+                    ]
+                }
+            }
+            }
+        })
+        let store=[];
+        console.log(res.hits.total);
+        store=res.hits.hits;
+        console.table(store);
+        console.timeEnd();
+    }catch(err){
+        console.log(err);
+    }
+}
+totalHits();
