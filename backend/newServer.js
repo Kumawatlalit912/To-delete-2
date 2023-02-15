@@ -1,6 +1,6 @@
 // const { Client } = require("@elastic/elasticsearch");
 const elastic = require("elasticsearch");
-const client = elastic.Client({ host: "localhost:9200" });
+const client = elastic.Client({ host: "http://localhost:9200" });
 // const client = new Client({ node: "http://localhost:9200" });
 const express = require("express");
 const cors = require("cors");
@@ -10,14 +10,14 @@ app.use(express.json());
 const someData = async (name) => {
   try {
     const some = await client.search({
-      index: "kibana_sample_data_ecommerce",
+      index: "movies",
       body: {
         query: {
-          regexp: {
-            customer_first_name: {
-              value: `${name}.*`,
-              flags: "ALL",
-              case_insensitive: true,
+          match: {
+            Series_Title: {
+              query: `${name}`,
+              analyzer: "standard",
+              prefix_length: 1,
             },
           },
         },
